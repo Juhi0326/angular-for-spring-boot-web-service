@@ -1,0 +1,71 @@
+<div class="container">
+  <div *ngIf="message" >
+    {{message}}
+  </div>
+
+<div class="row center">
+  <form novalidate (ngSubmit)="createNewPerson()" class="form-group col-6" [formGroup]="addItemForm">
+    <div>
+
+      <label for="First Name">First name</label>
+      <input type="text" class="form-control" id="First Name" placeholder="First Name" formControlName="firstName"
+        name='fName' >
+      <span class="invalid-feedback">
+        <span *ngIf="addItemForm.get('firstName').hasError('required')">
+          Please enter your first name.
+        </span>
+        <span *ngIf="addItemForm.get('firstName').hasError('minlength')">
+          The first name must be longer than 3 characters.
+        </span>
+        <span *ngIf="addItemForm.get('firstName').hasError('pattern')">
+          The First Name can contain only letters.
+        </span>
+      </span>
+    </div>
+    <div>
+      <label for="Last Name">Last name</label>
+      <input type="text" class="form-control" id="Last Name" placeholder="Last Name" formControlName="lastName"
+        name='lName'>
+      <span class="invalid-feedback">
+        <span *ngIf="addItemForm.get('lastName').hasError('required')">
+          Please enter your last name.
+        </span>
+        <span *ngIf="addItemForm.get('lastName').hasError('minlength')">
+          The last name must be longer than 2 characters.
+        </span>
+        <span *ngIf="addItemForm.get('lastName').hasError('pattern')">
+          The Last Name can contain only letters.
+        </span>
+      </span>
+    </div>
+    <div>
+      <label for="startNumber">startNumber</label>
+      <input type="text" class="form-control" id="startNumber" placeholder="startNumber"
+      formControlName="startNumber" name='startNumber'>
+    </div>
+
+    <div>
+      <label for="team">team</label>
+      <input type="text" class="form-control" id="team" placeholder="team" formControlName="team" name='team'>
+      <span class="invalid-feedback">
+        <span *ngIf="addItemForm.get('team').hasError('required')">
+          Please enter your Team.
+        </span>
+      </span>
+    </div>
+
+    <div>
+      <label for="priority">priority</label>
+      <input type="text" class="form-control" id="priority" placeholder="priority" formControlName="priority" name='priority' >
+    </div>
+    <br>
+
+    <br>
+    <div>
+      <button type="submit" id="submitButton" class="btn btn-primary btn-lg"> Submit </button>
+    </div>
+  </form>
+
+</div>
+</div>
+

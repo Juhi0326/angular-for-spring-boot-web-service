@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['admin']">People</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['createPerson']">Add new Person</a>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-info" (click)=deletepeople() >Delete all people</button>
+      </li>
+
+
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,41 @@
+<div class='container'>
+
+<table class="table table-bordered table-inverse">
+  <tr>
+    <th>Field</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Start Number</th>
+    <th>Team</th>
+    <th>Priority</th>
+    <th>Delete</th>
+  </tr>
+  <tr *ngFor="let person of personService.people">
+    <td>
+      {{person.field}}
+    </td>
+    <td>
+      {{person.firstName}}
+    </td>
+    <td>
+      {{person.lastName}}
+    </td>
+    <td>
+      {{person.startNumber}}
+    </td>
+    <td>
+      {{person.team}}
+    </td>
+    <td>
+      <div *ngIf='person.prio' >
+        {{person.priority}}
+      </div>
+
+    </td>
+    <td>
+      <button type="button" class="btn btn-danger" (click)="deletePersonById(person.id)">Delete</button>
+    </td>
+  </tr>
+</table>
+
+</div>
