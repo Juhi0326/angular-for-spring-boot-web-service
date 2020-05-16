@@ -18,19 +18,19 @@ export class PersonService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPeople(): Observable<any> {
+  getPeople() {
 
-    return this.httpClient.get('/server/api/v1/people');
+    return this.httpClient.get('/server/api/v1/people').subscribe((data) => this.people = data);
 
   }
 
   getPersonById(id: number) {
-    return this.httpClient.get('/server/api/v1/people/' + id);
+    return this.httpClient.get('/server/api/v1/people/' + id).subscribe((data) =>
+    this.people = data);
 
   }
 
   deletePersonById(id: number) {
-    console.log('deleted: ' + id);
     return this.httpClient.delete('/server/api/v1/people/cancel/' + id).subscribe((data) =>
       this.people = data);
   }

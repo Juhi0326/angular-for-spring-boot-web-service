@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Person } from '../person';
 import { PersonService } from './person.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, take } from 'rxjs/operators';
 import { empty } from 'rxjs';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class PersonResolverServiceService implements Resolve<any> {
     state: import('@angular/router').RouterStateSnapshot): any
     | import('rxjs').Observable<any>
     | Promise<any> {
-    return this.personService.getPeople().pipe(
+    return this.personService.getPeople().pipe(take(1),
       catchError((error) => {
         return empty();
       })

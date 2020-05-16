@@ -8,7 +8,7 @@ import { PersonResolverServiceService } from './services/person-resolver-service
 
 const routes: Routes = [
   { path: 'createPerson', component: CreatePersonComponent },
-  { path: 'admin', component: AdminComponent, resolve: {people: PersonResolverServiceService} },
+  { path: 'admin', component: AdminComponent},
   { path: 'editPerson', component: EditPersonComponent }
 
 ];

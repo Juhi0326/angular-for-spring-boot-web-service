@@ -16,9 +16,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
 
-    this.activatedRoute.data.subscribe((data: { people: any }) => {
-      this.People = data.people;
-    });
+    this.personService.getPeople();
   }
 
   public deletePersonById(id: number) {
