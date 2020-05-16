@@ -18,9 +18,9 @@ export class PersonService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPeople() {
+  getPeople(): Observable<any> {
 
-    return this.httpClient.get('/server/api/v1/people').subscribe((data) => this.people = data);
+    return this.httpClient.get('/server/api/v1/people');
 
   }
 

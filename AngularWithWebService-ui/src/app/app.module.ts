@@ -9,7 +9,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { CreatePersonComponent } from './components/create-person/create-person.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { EditPersonComponent } from './components/edit-person/edit-person.component';
-
+import { PersonResolverServiceService } from './services/person-resolver-service.service';
 
 
 @NgModule({
@@ -22,12 +22,13 @@ import { EditPersonComponent } from './components/edit-person/edit-person.compon
   ],
   imports: [
 
+
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
   ],
-  providers: [PersonService, HttpClientModule],
+  providers: [PersonService, HttpClientModule, PersonResolverServiceService],
   bootstrap: [AppComponent]
 
 })

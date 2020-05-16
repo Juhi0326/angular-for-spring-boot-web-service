@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonService } from './../../services/person.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Person } from 'src/app/person';
 
 
 
@@ -10,13 +11,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-
-
-  constructor(private personService: PersonService, private router: Router) { }
+  People: any;
+  constructor(private personService: PersonService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
 
-    this.personService.getPeople();
+    this.activatedRoute.data.subscribe((data: { people: any }) => {
+      this.People = data.people;
+    });
   }
 
   public deletePersonById(id: number) {
