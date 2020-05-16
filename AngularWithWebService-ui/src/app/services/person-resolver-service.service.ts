@@ -15,10 +15,6 @@ export class PersonResolverServiceService implements Resolve<any> {
     state: import('@angular/router').RouterStateSnapshot): any
     | import('rxjs').Observable<any>
     | Promise<any> {
-    return this.personService.getPeople().pipe(take(1),
-      catchError((error) => {
-        return empty();
-      })
-    );
+    return null;
   }
 }

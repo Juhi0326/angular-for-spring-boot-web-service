@@ -58,7 +58,8 @@ export class CreatePersonComponent implements OnInit {
       console.log(this.item.priority);
       if (this.item.priority !== 0) {
         this.item.prio = true;
-      }
+      } else { this.item.priority = 100; }
+
       this.item.field = 0;
       this.item.level = 0;
 
