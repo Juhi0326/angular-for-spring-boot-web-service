@@ -10,6 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./create-person.component.css']
 })
 export class CreatePersonComponent implements OnInit {
+
+  people: any;
+  PrioList = [];
+  duplicateValue: number;
   addItemForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -29,12 +33,15 @@ export class CreatePersonComponent implements OnInit {
 
   };
   message: any;
-  PrioList = [];
-  PrioButton: number = this.PrioList[0];
+
+
   found: number;
 
   ngOnInit() {
-    console.log(this.PrioList);
+
+    this.getPriority();
+    console.log(`ez van most a prio listában: ${this.PrioList}`);
+
     this.addItemForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40),
       Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
@@ -55,7 +62,7 @@ export class CreatePersonComponent implements OnInit {
       this.item.lastName = this.addItemForm.get('lastName').value;
       this.item.team = this.addItemForm.get('team').value;
       this.item.priority = this.addItemForm.get('priority').value;
-      console.log(this.item.priority);
+
       if (this.item.priority !== 0) {
         this.item.prio = true;
       } else { this.item.priority = 100; }
@@ -63,8 +70,26 @@ export class CreatePersonComponent implements OnInit {
       this.item.field = 0;
       this.item.level = 0;
 
-      this.personService.createPerson(this.item).
-        subscribe((data) => this.message = data);
+      if (this.item.priority !== 100) {
+        for (let i = 0; i < this.PrioList.length - 1; i++) {
+          if (this.PrioList[i] !== 100
+            && +this.PrioList[i] === +this.item.priority) {
+            this.duplicateValue = this.PrioList[i];
+            break;
+          }
+        }
+
+      }
+      console.log(`Ez van most a duplikált változóban: ${this.duplicateValue}`);
+      if (this.duplicateValue === undefined) {
+        this.personService.createPerson(this.item).
+          subscribe((data) => this.message = data);
+      } else {
+        console.log('duplicate!');
+      }
+
+
+
 
     }
 
@@ -91,6 +116,23 @@ export class CreatePersonComponent implements OnInit {
 
 
   }
+
+
+  getPriority() {
+
+    this.personService.getPeople()
+    .subscribe(
+      (data) => {
+        this.people = data;
+        this.PrioList = this.people.map(function(a) {return a['priority']; });
+        console.log(this.PrioList);
+      },
+      error => {
+        return console.log('Server error');
+      },
+    );
+
+}
 
 
 

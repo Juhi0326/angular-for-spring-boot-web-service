@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Person } from './../person';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,13 +21,14 @@ export class PersonService {
 
   getPeople() {
 
-    return this.httpClient.get('/server/api/v1/people').subscribe((data) => this.people = data);
+    return this.httpClient.get('/server/api/v1/people');
 
   }
 
+
   getPersonById(id: number) {
     return this.httpClient.get('/server/api/v1/people/' + id).subscribe((data) =>
-    this.people = data);
+      this.people = data);
 
   }
 
