@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { PersonService } from './../../services/person.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Person } from 'src/app/person';
@@ -10,9 +10,12 @@ import { Person } from 'src/app/person';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnChanges {
   People: any;
   constructor(private personService: PersonService, private activatedRoute: ActivatedRoute) { }
+  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
+    this.personService.getPeople().subscribe((data) => this.People = data);
+  }
 
   ngOnInit() {
 

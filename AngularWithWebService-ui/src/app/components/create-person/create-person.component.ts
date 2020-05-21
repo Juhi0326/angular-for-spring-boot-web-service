@@ -77,6 +77,7 @@ export class CreatePersonComponent implements OnInit {
             this.duplicatePrioValue = this.PrioList[i];
             this.duplicate = true;
             this.duplicateMessage += `Ilyen kiemelt már létezik: ${this.duplicatePrioValue}`;
+            this.message = null;
             break;
           }
         }
@@ -89,8 +90,10 @@ export class CreatePersonComponent implements OnInit {
           this.duplicate = true;
           if (this.duplicateMessage === '') {
             this.duplicateMessage = `Ilyen Start szám már létezik: ${this.duplicateStartNumberValue}`;
+            this.message = null;
           } else {
             this.duplicateMessage += `, illetve Ilyen Start szám is már létezik: ${this.duplicateStartNumberValue}`;
+            this.message = null;
           }
           break;
         }
@@ -100,6 +103,7 @@ export class CreatePersonComponent implements OnInit {
         this.personService.createPerson(this.item).
           subscribe((data) => {
             this.addItemForm.reset();
+            this.getPrioAndStartNumberList();
             this.message = data;
           });
 
