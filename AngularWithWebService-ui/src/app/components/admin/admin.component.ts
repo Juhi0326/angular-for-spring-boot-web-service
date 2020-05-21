@@ -19,7 +19,8 @@ export class AdminComponent implements OnInit {
     this.personService.getPeople().subscribe((data) => this.People = data);
   }
 
-  public deletePersonById(id: number) {
-    this.personService.deletePersonById(id);
+  deletepeople() {
+    this.personService.deleteAllPeople().subscribe((data) =>
+    this.People = data);
   }
 }

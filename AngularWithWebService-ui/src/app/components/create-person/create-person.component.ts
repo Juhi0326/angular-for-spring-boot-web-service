@@ -40,7 +40,6 @@ export class CreatePersonComponent implements OnInit {
   ngOnInit() {
 
     this.getPrioAndStartNumberList();
-    console.log(`ez van most a prio listában: ${this.PrioList}`);
 
     this.addItemForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40),
@@ -63,7 +62,7 @@ export class CreatePersonComponent implements OnInit {
       this.item.team = this.addItemForm.get('team').value;
       this.item.priority = this.addItemForm.get('priority').value;
 
-      if (this.item.priority !== 0) {
+      if (this.item.priority !== 0 && this.item.priority !== undefined) {
         this.item.prio = true;
       } else { this.item.priority = 100; }
 
@@ -72,9 +71,9 @@ export class CreatePersonComponent implements OnInit {
 
       if (this.item.priority !== 100) {
         for (let i = 0; i < this.PrioList.length - 1; i++) {
-          if (this.PrioList[i] !== 100
-            && +this.PrioList[i] === +this.item.priority) {
+          if (+this.PrioList[i] === +this.item.priority) {
             this.duplicatePrioValue = this.PrioList[i];
+            console.log(this.duplicatePrioValue);
             this.duplicate = true;
             this.duplicateMessage += `Ilyen kiemelt már létezik: ${this.duplicatePrioValue}`;
             this.message = null;
@@ -103,6 +102,7 @@ export class CreatePersonComponent implements OnInit {
         this.personService.createPerson(this.item).
           subscribe((data) => {
             this.addItemForm.reset();
+            this.addItemForm.patchValue({ priority: 0 });
             this.getPrioAndStartNumberList();
             this.message = data;
           });
@@ -111,18 +111,6 @@ export class CreatePersonComponent implements OnInit {
         console.log(this.duplicateMessage);
       }
     }
-  }
-
-  clear(): void {
-    this.item.startNumber = 0,
-      this.item.firstName = '',
-      this.item.lastName = '',
-      this.item.priority = 0,
-      this.item.team = '',
-      this.item.prio = false;
-    this.item.field = 0;
-    this.item.level = 0;
-
   }
 
   getPrioAndStartNumberList() {

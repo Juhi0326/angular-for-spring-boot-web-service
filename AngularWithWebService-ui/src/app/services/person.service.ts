@@ -36,8 +36,7 @@ export class PersonService {
   }
 
   deleteAllPeople() {
-    return this.httpClient.delete('/server/api/v1/people/cancel/all').subscribe((data) =>
-      this.people = data);
+    return this.httpClient.delete('/server/api/v1/people/cancel/all');
   }
 
   createPerson(person: Person) {

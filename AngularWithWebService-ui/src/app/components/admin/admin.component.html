@@ -1,5 +1,9 @@
 <div class='container'>
 
+  <div>
+    <button type="button" class="btn btn-info" (click)=deletepeople() >Összes versenyző törlése</button>
+  </div>
+  <br>
 <table class="table table-bordered table-inverse">
   <tr>
     <th>Field</th>
@@ -8,7 +12,7 @@
     <th>Start Number</th>
     <th>Team</th>
     <th>Priority</th>
-    <th>Delete</th>
+
   </tr>
   <tr *ngFor="let person of People">
     <td>
@@ -31,9 +35,6 @@
         {{person.priority}}
       </div>
 
-    </td>
-    <td>
-      <button type="button" class="btn btn-danger" (click)="deletePersonById(person.id)">Delete</button>
     </td>
   </tr>
 </table>

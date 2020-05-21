@@ -13,7 +13,5 @@ export class NavBarComponent implements OnInit {
   ngOnInit() {
   }
 
-  deletepeople() {
-    this.personService.deleteAllPeople();
-  }
+
 }
