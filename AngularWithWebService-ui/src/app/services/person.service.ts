@@ -25,11 +25,9 @@ export class PersonService {
 
   }
 
-
   getPersonById(id: number) {
     return this.httpClient.get('/server/api/v1/people/' + id).subscribe((data) =>
       this.people = data);
-
   }
 
   deletePersonById(id: number) {
@@ -46,12 +44,4 @@ export class PersonService {
     return this.httpClient.post('/server/api/v1/people/create', person, { responseType: 'text' as 'json' });
   }
 
-  getData(): Observable<Person> {
-    return this.httpClient.get<Person>('/server/api/v1/people');
-  }
-
-  getPrioList() {
-
-
-  }
 }

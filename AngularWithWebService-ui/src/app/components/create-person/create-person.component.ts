@@ -98,7 +98,11 @@ export class CreatePersonComponent implements OnInit {
 
       if (this.duplicatePrioValue === undefined && this.duplicateStartNumberValue === undefined) {
         this.personService.createPerson(this.item).
-          subscribe((data) => this.message = data);
+          subscribe((data) => {
+            this.addItemForm.reset();
+            this.message = data;
+          });
+
       } else {
         console.log(this.duplicateMessage);
       }
