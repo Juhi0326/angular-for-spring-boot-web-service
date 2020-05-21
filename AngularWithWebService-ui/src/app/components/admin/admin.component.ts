@@ -10,12 +10,9 @@ import { Person } from 'src/app/person';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit, OnChanges {
+export class AdminComponent implements OnInit {
   People: any;
   constructor(private personService: PersonService, private activatedRoute: ActivatedRoute) { }
-  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
-    this.personService.getPeople().subscribe((data) => this.People = data);
-  }
 
   ngOnInit() {
 
