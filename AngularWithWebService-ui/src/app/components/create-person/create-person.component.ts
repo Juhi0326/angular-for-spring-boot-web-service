@@ -13,8 +13,11 @@ export class CreatePersonComponent implements OnInit {
 
   people: any;
   PrioList = [];
-  duplicateValue: number;
+  StartNumberList = [];
+  duplicatePrioValue: number;
+  duplicateStartNumberValue: number;
   addItemForm: FormGroup;
+  duplicate: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private personService: PersonService,
@@ -30,16 +33,13 @@ export class CreatePersonComponent implements OnInit {
     prio: false,
     field: 0,
     level: 0
-
   };
   message: any;
-
-
-  found: number;
+  duplicateMessage = '';
 
   ngOnInit() {
 
-    this.getPriority();
+    this.getPrioAndStartNumberList();
     console.log(`ez van most a prio listában: ${this.PrioList}`);
 
     this.addItemForm = this.formBuilder.group({
@@ -74,35 +74,36 @@ export class CreatePersonComponent implements OnInit {
         for (let i = 0; i < this.PrioList.length - 1; i++) {
           if (this.PrioList[i] !== 100
             && +this.PrioList[i] === +this.item.priority) {
-            this.duplicateValue = this.PrioList[i];
+            this.duplicatePrioValue = this.PrioList[i];
+            this.duplicate = true;
+            this.duplicateMessage += `Ilyen kiemelt már létezik: ${this.duplicatePrioValue}`;
             break;
           }
         }
 
       }
-      console.log(`Ez van most a duplikált változóban: ${this.duplicateValue}`);
-      if (this.duplicateValue === undefined) {
+
+      for (let i = 0; i < this.StartNumberList.length - 1; i++) {
+        if (+this.StartNumberList[i] === +this.item.startNumber) {
+          this.duplicateStartNumberValue = this.StartNumberList[i];
+          this.duplicate = true;
+          if (this.duplicateMessage === '') {
+            this.duplicateMessage = `Ilyen Start szám már létezik: ${this.duplicateStartNumberValue}`;
+          } else {
+            this.duplicateMessage += `, illetve Ilyen Start szám is már létezik: ${this.duplicateStartNumberValue}`;
+          }
+          break;
+        }
+      }
+
+      if (this.duplicatePrioValue === undefined && this.duplicateStartNumberValue === undefined) {
         this.personService.createPerson(this.item).
           subscribe((data) => this.message = data);
       } else {
-        console.log('duplicate!');
+        console.log(this.duplicateMessage);
       }
-
-
-
-
     }
-
-
   }
-
-  // clickPrioButton(): void {
-  //   this.PrioButton = this.PrioList.shift();
-  //   this.PrioList.push(Math.max(...this.PrioList) + 1);
-  //   this.addItemForm.controls.priority.setValue(this.PrioButton);
-  //   this.PrioButton = this.PrioList[0];
-  //   console.log(this.PrioList);
-  // }
 
   clear(): void {
     this.item.startNumber = 0,
@@ -114,26 +115,25 @@ export class CreatePersonComponent implements OnInit {
     this.item.field = 0;
     this.item.level = 0;
 
-
   }
 
-
-  getPriority() {
+  getPrioAndStartNumberList() {
 
     this.personService.getPeople()
-    .subscribe(
-      (data) => {
-        this.people = data;
-        this.PrioList = this.people.map(function(a) {return a['priority']; });
-        console.log(this.PrioList);
-      },
-      error => {
-        return console.log('Server error');
-      },
-    );
+      .subscribe(
+        (data) => {
+          this.people = data;
+          this.PrioList = this.people.map(data$ => { return data$['priority'] });
+          this.StartNumberList = this.people.map(data$ => { return data$['startNumber'] });
+          //this.PrioList = this.people.map(function (a) { return a['priority']; });
 
-}
+          console.log(this.PrioList);
+          console.log(this.StartNumberList);
+        },
+        error => {
+          return console.log('Server error');
+        },
+      );
 
-
-
+  }
 }

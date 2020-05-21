@@ -1,6 +1,9 @@
 <div class="container">
-  <div *ngIf="message" >
+  <div *ngIf="message" class="alert alert-success" role="alert">
     {{message}}
+  </div>
+  <div *ngIf="duplicate" class="alert alert-danger" role="alert">
+    {{duplicateMessage}}
   </div>
 
 <div class="row center">
