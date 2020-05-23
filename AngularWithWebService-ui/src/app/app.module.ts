@@ -11,6 +11,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { EditPersonComponent } from './components/edit-person/edit-person.component';
 import { PersonResolverServiceService } from './services/person-resolver-service.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EditPersonComponent,
   ],
   imports: [
-
+    CollapseModule.forRoot(),
     NgbModule,
     BrowserModule,
     HttpClientModule,
