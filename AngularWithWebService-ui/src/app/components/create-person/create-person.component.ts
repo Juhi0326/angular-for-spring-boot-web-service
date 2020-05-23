@@ -39,6 +39,7 @@ export class CreatePersonComponent implements OnInit {
   };
   message: any;
   duplicateMessage = '';
+  newItem: boolean;
 
   ngOnInit() {
 
@@ -57,11 +58,11 @@ export class CreatePersonComponent implements OnInit {
 
     if (this.addItemForm.valid) {
 
-      this.item.startNumber = this.addItemForm.get('startNumber').value;
+      this.item.startNumber = +this.addItemForm.get('startNumber').value;
       this.item.firstName = this.addItemForm.get('firstName').value;
       this.item.lastName = this.addItemForm.get('lastName').value;
       this.item.team = this.addItemForm.get('team').value;
-      this.item.priority = this.addItemForm.get('priority').value;
+      this.item.priority = +this.addItemForm.get('priority').value;
 
       if (this.item.priority !== 0) {
         this.item.prio = true;
@@ -78,8 +79,8 @@ export class CreatePersonComponent implements OnInit {
             this.duplicate = true;
 
             this.duplicateMessage += `Ilyen kiemelt már létezik: ${this.duplicatePrioValue}`;
-            this.message = null;
-            this.formGroupInit();
+            this.addItemForm.reset();
+            this.formGroupContinue();
             break;
           }
         }
@@ -95,12 +96,12 @@ export class CreatePersonComponent implements OnInit {
             this.duplicateMessage = `Ilyen Start szám már létezik: ${this.duplicateStartNumberValue}`;
             this.message = null;
             this.addItemForm.reset();
-            this.addItemForm.patchValue({ priority: 0 });
+            this.formGroupContinue();
           } else {
             this.duplicateMessage += `, illetve Ilyen Start szám is már létezik: ${this.duplicateStartNumberValue}`;
             this.message = null;
             this.addItemForm.reset();
-            this.addItemForm.patchValue({ priority: 0 });
+            this.formGroupContinue();
           }
           break;
         }
@@ -109,8 +110,8 @@ export class CreatePersonComponent implements OnInit {
       if (this.duplicatePrioValue === 0 && this.duplicateStartNumberValue === 0) {
         this.personService.createPerson(this.item).
           subscribe((data) => {
+            this.item.prio = false;
             this.addItemForm.reset();
-            this.addItemForm.patchValue({ priority: 0 });
             this.getPrioAndStartNumberList();
             this.message = data;
           });
@@ -119,8 +120,6 @@ export class CreatePersonComponent implements OnInit {
         console.log(this.duplicateMessage);
       }
     }
-
-
     this.PrioList = [];
     this.StartNumberList = [];
     this.duplicatePrioValue = 0;
@@ -141,8 +140,44 @@ export class CreatePersonComponent implements OnInit {
     });
   }
 
-  focusFunction(){
-    console.log('működik a focus');
+  formGroupContinue() {
+
+    if (this.duplicateStartNumberValue !== 0 && this.duplicatePrioValue === 0) {
+      this.addItemForm.patchValue({
+        firstName: this.item.firstName,
+        lastName: this.item.lastName,
+        startNumber: 0,
+        team: this.item.team,
+        priority: this.item.priority,
+      });
+    } else if (this.duplicateStartNumberValue === 0 && this.duplicatePrioValue === 0) {
+      this.addItemForm.patchValue({
+        firstName: this.item.firstName,
+        lastName: this.item.lastName,
+        team: this.item.team,
+        startNumber: 0,
+        priority: 0,
+      });
+    } else if (this.duplicateStartNumberValue === 0 && this.duplicatePrioValue !== 0) {
+      this.addItemForm.patchValue({
+        firstName: this.item.firstName,
+        lastName: this.item.lastName,
+        team: this.item.team,
+        startNumber: this.item.startNumber,
+        priority: 0,
+      });
+    } else {
+    }
+
+  }
+
+  focusFunction() {
+    if (this.duplicateMessage.length > 1 || this.message !== undefined) {
+      console.log('működik a focus');
+      this.newItem = true;
+      this.duplicateMessage = '';
+      this.message = undefined;
+    }
   }
 
   getPrioAndStartNumberList() {
@@ -151,9 +186,11 @@ export class CreatePersonComponent implements OnInit {
       .subscribe(
         (data) => {
           this.people = data;
-          this.PrioList = this.people.map(data$ => { return data$['priority'] });
-          this.StartNumberList = this.people.map(data$ => { return data$['startNumber'] });
-          //this.PrioList = this.people.map(function (a) { return a['priority']; });
+          // tslint:disable-next-line: no-string-literal
+          this.PrioList = this.people.map(data$ => data$['priority']);
+          // tslint:disable-next-line: no-string-literal
+          this.StartNumberList = this.people.map(data$ => data$['startNumber']);
+          // this.PrioList = this.people.map(function (a) { return a['priority']; });
 
           console.log(this.PrioList);
           console.log(this.StartNumberList);
