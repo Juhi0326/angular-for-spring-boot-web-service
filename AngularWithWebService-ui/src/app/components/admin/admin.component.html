@@ -1,42 +1,39 @@
 <div class='container'>
 
   <div>
-    <button type="button" class="btn btn-info" (click)=deletepeople() >Összes versenyző törlése</button>
+    <button type="button" class="btn btn-info" (click)=deletepeople()>Összes versenyző törlése</button>
   </div>
   <br>
-<table class="table table-bordered table-inverse">
-  <tr>
-    <th>Field</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Start Number</th>
-    <th>Team</th>
-    <th>Priority</th>
+  <table class="table table-bordered table-inverse">
+    <tr>
+      <th>Pálya</th>
+      <th>Rajtszám</th>
+      <th>Név</th>
+      <th>Csapat</th>
+      <th>Kiemelés</th>
 
-  </tr>
-  <tr *ngFor="let person of People">
-    <td>
-      {{person.field}}
-    </td>
-    <td>
-      {{person.firstName}}
-    </td>
-    <td>
-      {{person.lastName}}
-    </td>
-    <td>
-      {{person.startNumber}}
-    </td>
-    <td>
-      {{person.team}}
-    </td>
-    <td>
-      <div *ngIf='person.prio' >
-        {{person.priority}}
-      </div>
+    </tr>
+    <tr *ngFor="let person of People">
+      <td>
+        {{person.field}}
+      </td>
+      <td>
+        {{person.startNumber}}
+      </td>
+      <td>
+        {{person.lastName}} {{person.firstName}}
+      </td>
 
-    </td>
-  </tr>
-</table>
+      <td>
+        {{person.team}}
+      </td>
+      <td>
+        <div *ngIf='person.prio'>
+          {{person.priority}}
+        </div>
+
+      </td>
+    </tr>
+  </table>
 
 </div>

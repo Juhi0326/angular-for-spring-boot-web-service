@@ -15,12 +15,15 @@ export class AdminComponent implements OnInit {
   constructor(private personService: PersonService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getPeople();
+  }
 
+  getPeople() {
     this.personService.getPeople().subscribe((data) => this.People = data);
   }
 
   deletepeople() {
     this.personService.deleteAllPeople().subscribe((data) =>
-    this.People = data);
+      this.People = data);
   }
 }

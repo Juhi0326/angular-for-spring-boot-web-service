@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonService } from './../../services/person.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-create-person',
   templateUrl: './create-person.component.html',
@@ -11,13 +12,15 @@ import { Router } from '@angular/router';
 })
 export class CreatePersonComponent implements OnInit {
 
+
   people: any;
   PrioList = [];
   StartNumberList = [];
-  duplicatePrioValue: number;
-  duplicateStartNumberValue: number;
+  duplicatePrioValue = 0;
+  duplicateStartNumberValue = 0;
   addItemForm: FormGroup;
   duplicate: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private personService: PersonService,
@@ -40,19 +43,17 @@ export class CreatePersonComponent implements OnInit {
   ngOnInit() {
 
     this.getPrioAndStartNumberList();
+    this.formGroupInit();
 
-    this.addItemForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40),
-      Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
-      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40),
-      Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
-      startNumber: [0, [Validators.required, Validators.min(1), Validators.max(1200), Validators.pattern(/^\d{1,3}$/)]],
-      team: ['', [Validators.required, Validators.minLength(2)]],
-      priority: [0]
-    });
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   createNewPerson() {
+    this.getPrioAndStartNumberList();
+    this.duplicateMessage = '';
 
     if (this.addItemForm.valid) {
 
@@ -62,7 +63,7 @@ export class CreatePersonComponent implements OnInit {
       this.item.team = this.addItemForm.get('team').value;
       this.item.priority = this.addItemForm.get('priority').value;
 
-      if (this.item.priority !== 0 && this.item.priority !== undefined) {
+      if (this.item.priority !== 0) {
         this.item.prio = true;
       } else { this.item.priority = 100; }
 
@@ -70,35 +71,42 @@ export class CreatePersonComponent implements OnInit {
       this.item.level = 0;
 
       if (this.item.priority !== 100) {
-        for (let i = 0; i < this.PrioList.length - 1; i++) {
+        for (let i = 0; i < this.PrioList.length; i++) {
           if (+this.PrioList[i] === +this.item.priority) {
             this.duplicatePrioValue = this.PrioList[i];
             console.log(this.duplicatePrioValue);
             this.duplicate = true;
+
             this.duplicateMessage += `Ilyen kiemelt már létezik: ${this.duplicatePrioValue}`;
             this.message = null;
+            this.formGroupInit();
             break;
           }
         }
 
       }
 
-      for (let i = 0; i < this.StartNumberList.length - 1; i++) {
+      for (let i = 0; i < this.StartNumberList.length; i++) {
         if (+this.StartNumberList[i] === +this.item.startNumber) {
           this.duplicateStartNumberValue = this.StartNumberList[i];
           this.duplicate = true;
           if (this.duplicateMessage === '') {
+
             this.duplicateMessage = `Ilyen Start szám már létezik: ${this.duplicateStartNumberValue}`;
             this.message = null;
+            this.addItemForm.reset();
+            this.addItemForm.patchValue({ priority: 0 });
           } else {
             this.duplicateMessage += `, illetve Ilyen Start szám is már létezik: ${this.duplicateStartNumberValue}`;
             this.message = null;
+            this.addItemForm.reset();
+            this.addItemForm.patchValue({ priority: 0 });
           }
           break;
         }
       }
 
-      if (this.duplicatePrioValue === undefined && this.duplicateStartNumberValue === undefined) {
+      if (this.duplicatePrioValue === 0 && this.duplicateStartNumberValue === 0) {
         this.personService.createPerson(this.item).
           subscribe((data) => {
             this.addItemForm.reset();
@@ -111,6 +119,30 @@ export class CreatePersonComponent implements OnInit {
         console.log(this.duplicateMessage);
       }
     }
+
+
+    this.PrioList = [];
+    this.StartNumberList = [];
+    this.duplicatePrioValue = 0;
+    this.duplicateStartNumberValue = 0;
+    this.item.priority = 0;
+    this.item.startNumber = 0;
+  }
+
+  formGroupInit() {
+    this.addItemForm = this.formBuilder.group({
+      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40),
+      Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40),
+      Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
+      startNumber: [0, [Validators.required, Validators.min(1), Validators.max(1200), Validators.pattern(/^\d{1,3}$/)]],
+      team: ['', [Validators.required, Validators.minLength(2)]],
+      priority: [0]
+    });
+  }
+
+  focusFunction(){
+    console.log('működik a focus');
   }
 
   getPrioAndStartNumberList() {

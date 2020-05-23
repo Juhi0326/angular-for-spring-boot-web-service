@@ -1,4 +1,5 @@
 <div class="container">
+
   <div *ngIf="message" class="alert alert-success" role="alert">
     {{message}}
   </div>
@@ -6,13 +7,14 @@
     {{duplicateMessage}}
   </div>
 
+
 <div class="row center">
   <form novalidate (ngSubmit)="createNewPerson()" class="form-group col-6" [formGroup]="addItemForm">
     <div>
 
       <label for="First Name">First name</label>
       <input type="text" class="form-control" id="First Name" placeholder="First Name" formControlName="firstName"
-        name='fName' >
+        name='fName' (focus)='focusFunction()' >
       <span class="invalid-feedback">
         <span *ngIf="addItemForm.get('firstName').hasError('required')">
           Please enter your first name.
