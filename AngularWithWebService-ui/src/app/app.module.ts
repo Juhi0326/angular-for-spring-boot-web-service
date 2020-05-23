@@ -10,6 +10,7 @@ import { CreatePersonComponent } from './components/create-person/create-person.
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { EditPersonComponent } from './components/edit-person/edit-person.component';
 import { PersonResolverServiceService } from './services/person-resolver-service.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { PersonResolverServiceService } from './services/person-resolver-service
   ],
   imports: [
 
-
+    NgbModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
