@@ -10,62 +10,92 @@
 
   <div class="row center">
     <form novalidate (ngSubmit)="createNewPerson()" class="form-group col-6" [formGroup]="addItemForm">
-
       <div>
-
         <label for="First Name">First name</label>
-        <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName"
-          name='firstName' (focus)='focusFunction()' required>
-          <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+        <input type="text" class="form-control" id="firstName" placeholder="Keresztnév" formControlName="firstName"
+          name='firstName' (focus)='focusFunction()'>
+        <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">
 
-            <div *ngIf="firstName.errors.required">
-              Name is required.
-            </div>
-            <div *ngIf="firstName.errors.minlength">
-              A keresztnévnek legalább 3 karakter hosszúnak kell lennie!
-            </div>
-            <div *ngIf="firstName.errors.pattern">
-              A keresztnévnek csak betűket tartalmazhat!
-            </div>
-
+          <div *ngIf="firstName.errors.required">
+            A keresztnév kötelező mező!
           </div>
+          <div *ngIf="firstName.errors.minlength">
+            A keresztnévnek legalább 3 karakter hosszúnak kell lennie!
+          </div>
+          <div *ngIf="firstName.errors.pattern">
+            A keresztnév csak betűket tartalmazhat!
+          </div>
+        </div>
       </div>
       <div>
         <label for="Last Name">Last name</label>
-        <input type="text" class="form-control" id="Last Name" placeholder="Last Name" formControlName="lastName"
-          name='lName'>
-        <span class="invalid-feedback">
-          <span *ngIf="addItemForm.get('lastName').hasError('required')">
-            Please enter your last name.
-          </span>
-          <span *ngIf="addItemForm.get('lastName').hasError('minlength')">
-            The last name must be longer than 2 characters.
-          </span>
-          <span *ngIf="addItemForm.get('lastName').hasError('pattern')">
-            The Last Name can contain only letters.
-          </span>
-        </span>
+        <input type="text" class="form-control" id="lastName" placeholder="Vezetéknév" formControlName="lastName"
+          name='lastName'>
+        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+          <div *ngIf="lastName.errors.required">
+            A vezetéknév kötelező mező!
+          </div>
+          <div *ngIf="lastName.errors.minlength">
+            A vezetéknévnek legalább 2 karakter hosszúnak kell lennie!
+          </div>
+          <div *ngIf="lastName.errors.pattern">
+            A vezetéknév csak betűket tartalmazhat!
+          </div>
+        </div>
       </div>
       <div>
         <label for="startNumber">startNumber</label>
-        <input type="text" class="form-control" id="startNumber" placeholder="startNumber" formControlName="startNumber"
+        <input type="text" class="form-control" id="startNumber" placeholder="Rajtszám" formControlName="startNumber"
           name='startNumber'>
+        <div *ngIf="startNumber.invalid && (startNumber.dirty || startNumber.touched)" class="alert alert-danger">
+          <div *ngIf="startNumber.errors.required">
+            A rajtszám kötelező mező!
+          </div>
+          <div *ngIf="startNumber.errors.min">
+            a rajtszámnak minimum 1-nek kell lennie!
+          </div>
+          <div *ngIf="startNumber.errors.max">
+            a rajtszámnak maximum 1200-at adhatsz meg!
+          </div>
+          <div *ngIf="startNumber.errors.pattern">
+            A rajtszám csak számokat tartalmazhat!
+          </div>
+        </div>
       </div>
 
       <div>
         <label for="team">team</label>
-        <input type="text" class="form-control" id="team" placeholder="team" formControlName="team" name='team'>
-        <span class="invalid-feedback">
-          <span *ngIf="addItemForm.get('team').hasError('required')">
-            Please enter your Team.
-          </span>
-        </span>
+        <input type="text" class="form-control" id="team" placeholder="Csapatnév" formControlName="team" name='team'>
+        <div *ngIf="team.invalid && (team.dirty || team.touched)" class="alert alert-danger">
+
+          <div *ngIf="team.errors.required">
+            A csapatnév kötelező mező!
+          </div>
+          <div *ngIf="team.errors.minlength">
+            A a csapatnévnek legalább 2 karakter hosszúnak kell lennie!
+          </div>
+          <div *ngIf="team.errors.maxlength">
+            A a csapatnév maximum 40 karaktert tartalmazhat!
+          </div>
+
+        </div>
       </div>
 
       <div>
         <label for="priority">priority</label>
-        <input type="text" class="form-control" id="priority" placeholder="priority" formControlName="priority"
+        <input type="text" class="form-control" id="priority" placeholder="Kiemelés" formControlName="priority"
           name='priority'>
+        <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="alert alert-danger">
+          <div *ngIf="priority.errors.required">
+            A kiemelés kötelező mező! Amennyiben nem kiemelt a versenyző, kérjük adjon meg egy 0-át.
+          </div>
+          <div *ngIf="priority.errors.pattern">
+            A kiemelés csak számokat tartalmazhat!
+          </div>
+          <div *ngIf="priority.errors.max">
+            a kiemelésnek maximum 99-et adhatsz meg!
+          </div>
+        </div>
       </div>
       <br>
 

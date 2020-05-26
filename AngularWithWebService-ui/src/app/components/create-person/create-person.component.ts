@@ -141,9 +141,9 @@ export class CreatePersonComponent implements OnInit {
       Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40),
       Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
-      startNumber: [0, [Validators.required, Validators.min(1), Validators.max(1200), Validators.pattern(/^\d{1,3}$/)]],
-      team: ['', [Validators.required, Validators.minLength(2)]],
-      priority: [0]
+      startNumber: [0, [Validators.required, Validators.min(1), Validators.max(1200), Validators.pattern(/^[0-9]*$/)]],
+      team: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
+      priority: [0, [Validators.required, Validators.max(99), Validators.pattern(/^[0-9]*$/)]]
     });
   }
 
@@ -188,6 +188,10 @@ export class CreatePersonComponent implements OnInit {
   }
 
   get firstName() { return this.addItemForm.get('firstName'); }
+  get lastName() { return this.addItemForm.get('lastName'); }
+  get startNumber() { return this.addItemForm.get('startNumber'); }
+  get team() { return this.addItemForm.get('team'); }
+  get priority() { return this.addItemForm.get('priority'); }
 
   getPrioAndStartNumberList() {
 
