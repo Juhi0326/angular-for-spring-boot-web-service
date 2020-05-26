@@ -66,7 +66,10 @@ export class CreatePersonComponent implements OnInit {
 
       if (this.item.priority !== 0) {
         this.item.prio = true;
-      } else { this.item.priority = 100; }
+      } else {
+        this.item.priority = 100;
+        this.item.prio = false;
+      }
 
       this.item.field = 0;
       this.item.level = 0;
@@ -112,6 +115,10 @@ export class CreatePersonComponent implements OnInit {
           subscribe((data) => {
             this.item.prio = false;
             this.addItemForm.reset();
+            this.addItemForm.patchValue({
+              startNumber: 0,
+              priority: 0,
+            });
             this.getPrioAndStartNumberList();
             this.message = data;
           });
@@ -158,7 +165,7 @@ export class CreatePersonComponent implements OnInit {
         startNumber: 0,
         priority: 0,
       });
-    } else if (this.duplicateStartNumberValue === 0 && this.duplicatePrioValue !== 0) {
+    } else if (this.duplicateStartNumberValue !== 0 && this.duplicatePrioValue !== 0) {
       this.addItemForm.patchValue({
         firstName: this.item.firstName,
         lastName: this.item.lastName,
@@ -179,6 +186,8 @@ export class CreatePersonComponent implements OnInit {
       this.message = undefined;
     }
   }
+
+  get firstName() { return this.addItemForm.get('firstName'); }
 
   getPrioAndStartNumberList() {
 
