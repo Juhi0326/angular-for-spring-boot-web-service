@@ -149,15 +149,26 @@ export class CreatePersonComponent implements OnInit {
 
   formGroupContinue() {
 
-    if (this.duplicateStartNumberValue !== 0 && this.duplicatePrioValue === 0) {
+    if (this.duplicateStartNumberValue !== 0 && this.duplicatePrioValue === 0 && this.item.priority === 100) {
       this.addItemForm.patchValue({
         firstName: this.item.firstName,
         lastName: this.item.lastName,
         startNumber: 0,
         team: this.item.team,
-        priority: this.item.priority,
+        priority: 0
       });
-    } else if (this.duplicateStartNumberValue === 0 && this.duplicatePrioValue === 0) {
+    }
+    else if (this.duplicateStartNumberValue !== 0 && this.duplicatePrioValue === 0 && this.item.priority !== 100) {
+      this.addItemForm.patchValue({
+        firstName: this.item.firstName,
+        lastName: this.item.lastName,
+        startNumber: 0,
+        team: this.item.team,
+        priority: this.item.priority
+      });
+    }
+
+    else if (this.duplicateStartNumberValue === 0 && this.duplicatePrioValue === 0) {
       this.addItemForm.patchValue({
         firstName: this.item.firstName,
         lastName: this.item.lastName,
@@ -174,6 +185,13 @@ export class CreatePersonComponent implements OnInit {
         priority: 0,
       });
     } else {
+      this.addItemForm.patchValue({
+        firstName: this.item.firstName,
+        lastName: this.item.lastName,
+        team: this.item.team,
+        startNumber: this.item.startNumber,
+        priority: 0,
+      });
     }
 
   }

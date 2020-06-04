@@ -1,0 +1,8 @@
+.prio {
+  font-size: 10px;
+  color: red;
+}
+.name {
+  display: flex;
+  justify-content: space-between;
+}

@@ -10,7 +10,6 @@
       <th>Rajtszám</th>
       <th>Név</th>
       <th>Csapat</th>
-      <th>Kiemelés</th>
 
     </tr>
     <tr *ngFor="let person of People">
@@ -20,19 +19,20 @@
       <td>
         {{person.startNumber}}
       </td>
-      <td>
-        {{person.lastName}} {{person.firstName}}
+      <td class='name'>
+        <span>
+          {{person.lastName}} {{person.firstName}}
+        </span>
+
+        <span *ngIf='person.prio' class="prio">
+          {{person.priority}}
+        </span>
       </td>
 
       <td>
         {{person.team}}
       </td>
-      <td>
-        <div *ngIf='person.prio'>
-          {{person.priority}}
-        </div>
 
-      </td>
     </tr>
   </table>
 
