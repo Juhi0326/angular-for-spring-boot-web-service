@@ -58,11 +58,22 @@ export class CreatePersonComponent implements OnInit {
 
     if (this.addItemForm.valid) {
 
-      this.item.startNumber = +this.addItemForm.get('startNumber').value;
+      if (this.addItemForm.get('startNumber').value === '') {
+        this.item.startNumber = 0;
+      } else {
+        this.item.startNumber = +this.addItemForm.get('startNumber').value;
+      }
+
       this.item.firstName = this.addItemForm.get('firstName').value;
       this.item.lastName = this.addItemForm.get('lastName').value;
       this.item.team = this.addItemForm.get('team').value;
-      this.item.priority = +this.addItemForm.get('priority').value;
+
+      if (this.addItemForm.get('priority').value === '' || this.addItemForm.get('priority').value === 0) {
+        this.item.priority = 0;
+      } else {
+        this.item.priority = +this.addItemForm.get('priority').value;
+      }
+
 
       if (this.item.priority !== 0) {
         this.item.prio = true;
@@ -116,8 +127,8 @@ export class CreatePersonComponent implements OnInit {
             this.item.prio = false;
             this.addItemForm.reset();
             this.addItemForm.patchValue({
-              startNumber: 0,
-              priority: 0,
+              startNumber: '',
+              priority: '',
             });
             this.getPrioAndStartNumberList();
             this.message = data;
@@ -125,6 +136,12 @@ export class CreatePersonComponent implements OnInit {
 
       } else {
         console.log(this.duplicateMessage);
+      }
+    } else {
+      console.log('invalid form');
+      if (!this.addItemForm.get('startNumber').valid) {
+
+
       }
     }
     this.PrioList = [];
@@ -141,9 +158,9 @@ export class CreatePersonComponent implements OnInit {
       Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40),
       Validators.pattern(/^[a-zA-ZáéíóöőüúűÁÉÍÓÖŐÚŰ]+$/)]],
-      startNumber: [0, [Validators.required, Validators.min(1), Validators.max(1200), Validators.pattern(/^[0-9]*$/)]],
+      startNumber: ['', [Validators.required, Validators.min(1), Validators.max(1200), Validators.pattern(/^[0-9]*$/)]],
       team: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
-      priority: [0, [Validators.required, Validators.max(99), Validators.pattern(/^[0-9]*$/)]]
+      priority: ['', [Validators.max(99), Validators.pattern(/^[0-9]*$/)]]
     });
   }
 
@@ -153,16 +170,16 @@ export class CreatePersonComponent implements OnInit {
       this.addItemForm.patchValue({
         firstName: this.item.firstName,
         lastName: this.item.lastName,
-        startNumber: 0,
+        startNumber: '',
         team: this.item.team,
-        priority: 0
+        priority: ''
       });
     }
     else if (this.duplicateStartNumberValue !== 0 && this.duplicatePrioValue === 0 && this.item.priority !== 100) {
       this.addItemForm.patchValue({
         firstName: this.item.firstName,
         lastName: this.item.lastName,
-        startNumber: 0,
+        startNumber: '',
         team: this.item.team,
         priority: this.item.priority
       });
@@ -173,8 +190,8 @@ export class CreatePersonComponent implements OnInit {
         firstName: this.item.firstName,
         lastName: this.item.lastName,
         team: this.item.team,
-        startNumber: 0,
-        priority: 0,
+        startNumber: '',
+        priority: '',
       });
     } else if (this.duplicateStartNumberValue !== 0 && this.duplicatePrioValue !== 0) {
       this.addItemForm.patchValue({
@@ -182,7 +199,7 @@ export class CreatePersonComponent implements OnInit {
         lastName: this.item.lastName,
         team: this.item.team,
         startNumber: this.item.startNumber,
-        priority: 0,
+        priority: '',
       });
     } else {
       this.addItemForm.patchValue({
@@ -190,7 +207,7 @@ export class CreatePersonComponent implements OnInit {
         lastName: this.item.lastName,
         team: this.item.team,
         startNumber: this.item.startNumber,
-        priority: 0,
+        priority: '',
       });
     }
 

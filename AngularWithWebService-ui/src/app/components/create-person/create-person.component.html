@@ -11,8 +11,8 @@
   <div class="row center">
     <form novalidate (ngSubmit)="createNewPerson()" class="form-group col-6" [formGroup]="addItemForm">
       <div>
-        <label for="First Name">First name</label>
-        <input type="text" class="form-control" id="firstName" placeholder="Keresztnév" formControlName="firstName"
+        <label for="First Name">Keresztnév <span class="star">*</span></label>
+        <input type="text" class="form-control" id="firstName" formControlName="firstName"
           name='firstName' (focus)='focusFunction()'>
         <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">
 
@@ -28,8 +28,8 @@
         </div>
       </div>
       <div>
-        <label for="Last Name">Last name</label>
-        <input type="text" class="form-control" id="lastName" placeholder="Vezetéknév" formControlName="lastName"
+        <label for="Last Name">Vezetéknév <span class="star">*</span></label>
+        <input type="text" class="form-control" id="lastName" formControlName="lastName"
           name='lastName'>
         <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
           <div *ngIf="lastName.errors.required">
@@ -44,8 +44,8 @@
         </div>
       </div>
       <div>
-        <label for="startNumber">startNumber</label>
-        <input type="text" class="form-control" id="startNumber" placeholder="Rajtszám" formControlName="startNumber"
+        <label for="startNumber">Rajtszám <span class="star">*</span></label>
+        <input type="text" class="form-control" id="startNumber" formControlName="startNumber"
           name='startNumber'>
         <div *ngIf="startNumber.invalid && (startNumber.dirty || startNumber.touched)" class="alert alert-danger">
           <div *ngIf="startNumber.errors.required">
@@ -64,8 +64,8 @@
       </div>
 
       <div>
-        <label for="team">team</label>
-        <input type="text" class="form-control" id="team" placeholder="Csapatnév" formControlName="team" name='team'>
+        <label for="team">Csapatnév <span class="star">*</span></label>
+        <input type="text" class="form-control" id="team" formControlName="team" name='team'>
         <div *ngIf="team.invalid && (team.dirty || team.touched)" class="alert alert-danger">
 
           <div *ngIf="team.errors.required">
@@ -82,8 +82,8 @@
       </div>
 
       <div>
-        <label for="priority">priority</label>
-        <input type="text" class="form-control" id="priority" placeholder="Kiemelés" formControlName="priority"
+        <label for="priority">Kiemelés</label>
+        <input type="text" class="form-control" id="priority" formControlName="priority"
           name='priority'>
         <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="alert alert-danger">
           <div *ngIf="priority.errors.required">
@@ -98,11 +98,14 @@
         </div>
       </div>
       <br>
-
+      <br>
+      <span class="star">A csillaggal jelölt mező kitöltése kötelező!</span>
+      <br>
       <br>
       <div>
         <button type="submit" id="submitButton" class="btn btn-primary btn-lg"> Submit </button>
       </div>
+
     </form>
 
   </div>

@@ -5,3 +5,8 @@ color: red;
 h2 {
   color: green;
 }
+
+.star {
+  color: red;
+  font-size: 10px;
+}
