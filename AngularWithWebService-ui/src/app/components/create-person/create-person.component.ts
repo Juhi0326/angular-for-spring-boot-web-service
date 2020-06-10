@@ -20,6 +20,8 @@ export class CreatePersonComponent implements OnInit {
   duplicateStartNumberValue = 0;
   addItemForm: FormGroup;
   duplicate: boolean;
+  invalidForm: boolean;
+  invalidFormMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,6 +59,8 @@ export class CreatePersonComponent implements OnInit {
     this.duplicateMessage = '';
 
     if (this.addItemForm.valid) {
+      this.invalidForm = false;
+      this.invalidFormMessage = '';
 
       if (this.addItemForm.get('startNumber').value === '') {
         this.item.startNumber = 0;
@@ -138,11 +142,8 @@ export class CreatePersonComponent implements OnInit {
         console.log(this.duplicateMessage);
       }
     } else {
-      console.log('invalid form');
-      if (!this.addItemForm.get('startNumber').valid) {
-
-
-      }
+      this.invalidForm = true;
+      this.invalidFormMessage += 'Nem sikerült elmenteni a formot, van olyan mező, ami nem lett helyesen kitöltve!';
     }
     this.PrioList = [];
     this.StartNumberList = [];
@@ -220,6 +221,11 @@ export class CreatePersonComponent implements OnInit {
       this.duplicateMessage = '';
       this.message = undefined;
     }
+    if (this.invalidForm === true) {
+      this.invalidFormMessage = '';
+      this.invalidForm = false;
+    }
+
   }
 
   get firstName() { return this.addItemForm.get('firstName'); }

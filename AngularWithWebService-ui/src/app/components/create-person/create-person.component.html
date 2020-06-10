@@ -7,6 +7,9 @@
   <div *ngIf="duplicate">
     <h1>{{duplicateMessage}}</h1>
   </div>
+  <div *ngIf="invalidForm">
+    <h1>{{invalidFormMessage}}</h1>
+  </div>
 
   <div class="row center">
     <form novalidate (ngSubmit)="createNewPerson()" class="form-group col-6" [formGroup]="addItemForm">
@@ -30,7 +33,7 @@
       <div>
         <label for="Last Name">Vezetéknév <span class="star">*</span></label>
         <input type="text" class="form-control" id="lastName" formControlName="lastName"
-          name='lastName'>
+          name='lastName' (focus)='focusFunction()'>
         <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
           <div *ngIf="lastName.errors.required">
             A vezetéknév kötelező mező!
@@ -46,7 +49,7 @@
       <div>
         <label for="startNumber">Rajtszám <span class="star">*</span></label>
         <input type="text" class="form-control" id="startNumber" formControlName="startNumber"
-          name='startNumber'>
+          name='startNumber' (focus)='focusFunction()'>
         <div *ngIf="startNumber.invalid && (startNumber.dirty || startNumber.touched)" class="alert alert-danger">
           <div *ngIf="startNumber.errors.required">
             A rajtszám kötelező mező!
@@ -65,7 +68,7 @@
 
       <div>
         <label for="team">Csapatnév <span class="star">*</span></label>
-        <input type="text" class="form-control" id="team" formControlName="team" name='team'>
+        <input type="text" class="form-control" id="team" formControlName="team" name='team' (focus)='focusFunction()'>
         <div *ngIf="team.invalid && (team.dirty || team.touched)" class="alert alert-danger">
 
           <div *ngIf="team.errors.required">
@@ -84,7 +87,7 @@
       <div>
         <label for="priority">Kiemelés</label>
         <input type="text" class="form-control" id="priority" formControlName="priority"
-          name='priority'>
+          name='priority' (focus)='focusFunction()'>
         <div *ngIf="priority.invalid && (priority.dirty || priority.touched)" class="alert alert-danger">
           <div *ngIf="priority.errors.required">
             A kiemelés kötelező mező! Amennyiben nem kiemelt a versenyző, kérjük adjon meg egy 0-át.
